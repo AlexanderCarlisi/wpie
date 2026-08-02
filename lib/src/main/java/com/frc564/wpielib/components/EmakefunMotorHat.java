@@ -80,10 +80,12 @@ public class EmakefunMotorHat implements IDriverBoard {
      * Set PWM as a duty cycle
      * 
      * @param channel PWM Channel
-     * @param dutyCycle 
+     * @param dutyCycle [-1,1] +ccw/-cw
      */
     @Override
     public void setDutyCycle(IDCMotor motor, double dutyCycle) {
-        
+        dutyCycle = Math.clamp(dutyCycle, -1, 1);
+        int pwm = (int) Math.round(dutyCycle * 255);
+        setPWM(motor, pwm);
     }
 }

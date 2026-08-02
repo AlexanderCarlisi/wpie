@@ -100,6 +100,7 @@ public class PCA9685 {
      * 
      * @implNote Example code from Emakefun explicitly commented out setting the registers
      *  all at the same time, so this code implementation may not work.
+     * @implNote The PCA9685 has a unique functionality for PWM of 4096, so its an allowed value.
      */
     public void setPWM(int channel, int on, int off) {
         // Write 4 registers sequentially: ON_L, ON_H, OFF_L, OFF_H
@@ -114,24 +115,24 @@ public class PCA9685 {
         _I2C.writeRegister(regAddr, buffer);
     }
 
-    /**
-     * Set PWM as a duty cycle
-     * 
-     * @param channel PWM Channel
-     * @param dutyCycle 
-     */
-    public void setDutyCycle(int channel, double dutyCycle) {
-        dutyCycle = Math.max(0.0, Math.min(1.0, dutyCycle)); // Clamp 0-1
-        int off = (int) Math.round(dutyCycle * (double) _PWM_RES);
+    // /**
+    //  * Set PWM as a duty cycle
+    //  * 
+    //  * @param channel PWM Channel
+    //  * @param dutyCycle 
+    //  */
+    // public void setDutyCycle(int channel, double dutyCycle) {
+    //     dutyCycle = Math.max(0.0, Math.min(1.0, dutyCycle)); // Clamp 0-1
+    //     int off = (int) Math.round(dutyCycle * (double) _PWM_RES);
 
-        if (off == 0) {
-            setPWM(channel, 0, 0);
-        } else if (off >= _PWM_RES-1) {
-            setPWM(channel, _PWM_RES, 0); // Full ON
-        } else {
-            setPWM(channel, 0, off);
-        }
-    }
+    //     if (off == 0) {
+    //         setPWM(channel, 0, 0);
+    //     } else if (off >= _PWM_RES-1) {
+    //         setPWM(channel, _PWM_RES, 0); // Full ON
+    //     } else {
+    //         setPWM(channel, 0, off);
+    //     }
+    // }
 
     /**
      * Set PWM for ALL 16 channels at once using the broadcast registers.
