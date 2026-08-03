@@ -6,6 +6,13 @@ import com.frc564.wpielib.IDCMotor;
 import com.frc564.wpielib.IDriverBoard;
 import com.pi4j.context.Context;
 
+/**
+ * 
+ * EmakefunMotorHat
+ * 
+ * @author Alexander Carlisi
+ * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard">Emakefun Motor Drive Board Reference</a>
+ */
 public class EmakefunMotorHat implements IDriverBoard {
     private static final int MAX_DC_MOTORS = 4;
     private static final int MAX_SERVOS = 6;
