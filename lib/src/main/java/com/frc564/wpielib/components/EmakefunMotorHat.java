@@ -22,18 +22,20 @@ public class EmakefunMotorHat implements IDriverBoard {
     private static boolean s_initialized = false;
     private static ArrayList<Integer> s_dcMotorIds = new ArrayList<>();
 
-    private final PCA9685 _PCA9685;
+    private PCA9685 _pca9865;
 
-    private EmakefunMotorHat(Context pi4j) {
-        _PCA9685 = new PCA9685(pi4j, 1, 0x60);
-    }
-
-    @Override
-    public EmakefunMotorHat init(Context pi4j) {
+    public EmakefunMotorHat(Context pi4j) {
         if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
         s_initialized = true;
-        return new EmakefunMotorHat(pi4j);
+        _pca9865 = new PCA9685(pi4j, 1, 0x60);
     }
+
+    // @Override
+    // public void init(Context pi4j) {
+    //     if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
+    //     s_initialized = true;
+    //     _pca9865 = new PCA9685(pi4j, 1, 0x60); 
+    // }
 
     @Override
     public void addDCMotor(DCMotorSetPins dcMotorSetPins, int id) {
@@ -53,13 +55,13 @@ public class EmakefunMotorHat implements IDriverBoard {
     }
 
     private void setPin(int pin, boolean high) {
-        if (high) _PCA9685.setPWM(pin, 4096, 0);
-        else _PCA9685.setPWM(pin, 0, 4096);
+        if (high) _pca9865.setPWM(pin, 4096, 0);
+        else _pca9865.setPWM(pin, 0, 4096);
     }
 
     private void setPWM(int pin, int value) {
-        if (value > 4095) _PCA9685.setPWM(pin, 4096, 0);
-        else _PCA9685.setPWM(pin, 0, value);
+        if (value > 4095) _pca9865.setPWM(pin, 4096, 0);
+        else _pca9865.setPWM(pin, 0, value);
     }
 
     /**

@@ -9,10 +9,10 @@ package com.frc564.wpielib;
 public interface IDCMotor {
     
     default void init(int id) {
-        Robot.getDriverBoard().addDCMotor(this::setPins, id);
+        PIRobot.getDriverBoard().addDCMotor(this::setPins, id);
     }
     default void init(int id, boolean invert) {
-        Robot.getDriverBoard().addDCMotor(this::setPins, id);
+        PIRobot.getDriverBoard().addDCMotor(this::setPins, id);
         if (invert) invert();
     }
 
