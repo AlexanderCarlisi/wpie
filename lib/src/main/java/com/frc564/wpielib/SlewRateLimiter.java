@@ -1,5 +1,9 @@
 package com.frc564.wpielib;
 
+/**
+ * 
+ * SlewRateLimiter
+ */
 public class SlewRateLimiter {
     private final double _MAX_RATE_CHANGE_PER_SECOND;
     private double _lastOutput = 0.0;

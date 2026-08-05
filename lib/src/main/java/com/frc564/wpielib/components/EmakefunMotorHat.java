@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.frc564.wpielib.IDCMotor;
 import com.frc564.wpielib.IDriverBoard;
+import com.frc564.wpielib.IEncoder.EncoderSetPins;
 import com.pi4j.context.Context;
 
 /**
@@ -12,22 +13,27 @@ import com.pi4j.context.Context;
  * 
  * @author Alexander Carlisi
  * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard">Emakefun Motor Drive Board Reference</a>
+ * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard/blob/master/schematic/RaspBerryDriverBoard.pdf">PCB Schematic</a>
  */
 public class EmakefunMotorHat implements IDriverBoard {
     private static final int MAX_DC_MOTORS = 4;
     private static final int MAX_SERVOS = 6;
     private static final int MAX_STEPPER_MOTORS = 2;
+    private static final int MAX_ENCODERS = 4;
+    private static final ArrayList<Integer> _DC_MOTOR_IDS = new ArrayList<>();
+    private static final ArrayList<Integer> _ENCODER_IDS = new ArrayList<>();
 
     // Only one should exist
     private static boolean s_initialized = false;
-    private static ArrayList<Integer> s_dcMotorIds = new ArrayList<>();
 
+    private final Context _PI4J;
     private PCA9685 _pca9865;
 
     public EmakefunMotorHat(Context pi4j) {
         if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
         s_initialized = true;
         _pca9865 = new PCA9685(pi4j, 1, 0x60);
+        _PI4J = pi4j;
     }
 
     // @Override
@@ -39,10 +45,10 @@ public class EmakefunMotorHat implements IDriverBoard {
 
     @Override
     public void addDCMotor(DCMotorSetPins dcMotorSetPins, int id) {
-        if (s_dcMotorIds.contains(id)) 
+        if (_DC_MOTOR_IDS.contains(id)) 
             throw new IllegalArgumentException("Cannot initialize DCMotor with same Id multiple times.");
         else 
-            s_dcMotorIds.add(id);
+            _DC_MOTOR_IDS.add(id);
 
         switch(id) {
             case 0: dcMotorSetPins.setPins(0, 1);
@@ -51,6 +57,21 @@ public class EmakefunMotorHat implements IDriverBoard {
             case 3: dcMotorSetPins.setPins(7, 6);
             default: 
                 throw new IllegalArgumentException("DCMotor Id must be between 0 and 3");
+        }
+    }
+
+    @Override
+    public void addEncoder(EncoderSetPins encoderSetPins, int id) {
+        if (_ENCODER_IDS.contains(id))
+            throw new IllegalArgumentException("Cannot initialize Encoder with same Id multiple times.");
+        else 
+            _ENCODER_IDS.add(id);
+
+        switch(id) {
+            case 1: encoderSetPins.setPins(_PI4J, 5, 6);
+            case 2: encoderSetPins.setPins(_PI4J, 13, 19);
+            case 3: encoderSetPins.setPins(_PI4J, 20, 21);
+            case 4: encoderSetPins.setPins(_PI4J, 16, 26);
         }
     }
 

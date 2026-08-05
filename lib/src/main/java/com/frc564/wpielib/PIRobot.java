@@ -2,6 +2,10 @@ package com.frc564.wpielib;
 
 import com.pi4j.context.Context;
 
+/**
+ * 
+ * PIRobot
+ */
 public class PIRobot {
     private static PIRobot s_robot;
 

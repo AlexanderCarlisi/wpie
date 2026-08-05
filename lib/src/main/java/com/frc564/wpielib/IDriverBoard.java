@@ -1,5 +1,11 @@
 package com.frc564.wpielib;
 
+import com.frc564.wpielib.IEncoder.EncoderSetPins;
+
+/**
+ * 
+ * IDriverBoard
+ */
 public interface IDriverBoard {
     @FunctionalInterface
     public interface DCMotorSetPins {
@@ -10,4 +16,5 @@ public interface IDriverBoard {
     public void addDCMotor(DCMotorSetPins dcMotorSetPins, int id);
     public void setPWM(IDCMotor motor, int pwm);
     public void setDutyCycle(IDCMotor motor, double dutyCycle);
+    public void addEncoder(EncoderSetPins encoderSetPins, int id);
 }

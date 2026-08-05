@@ -4,6 +4,10 @@ import com.frc564.wpielib.IDCMotor;
 import com.frc564.wpielib.IEncoder;
 import com.frc564.wpielib.PIRobot;
 
+/**
+ * 
+ * DCGMN20Motor
+ */
 public class DCGMN20Motor implements IDCMotor {
 
     private final double _DUTY_CYCLE_LIMIT = 1;
