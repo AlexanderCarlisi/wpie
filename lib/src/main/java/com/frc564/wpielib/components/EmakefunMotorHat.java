@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.frc564.wpielib.IDCMotor;
 import com.frc564.wpielib.IDriverBoard;
 import com.frc564.wpielib.IEncoder.EncoderSetPins;
+import com.frc564.wpielib.IServo.ServoSetPin;
 import com.pi4j.context.Context;
 
 /**
@@ -19,12 +20,14 @@ import com.pi4j.context.Context;
 public class EmakefunMotorHat implements IDriverBoard {
 
     private static final int _MAX_DC_MOTORS = 4;
-    private static final int _MAX_SERVOS = 6;
+    private static final int _MAX_SERVOS = 8;
     private static final int _MAX_ENCODERS = 4;
     // private static final int MAX_STEPPER_MOTORS = 2;
 
     private static final ArrayList<Integer> _DC_MOTOR_IDS = new ArrayList<>();
     private static final ArrayList<Integer> _ENCODER_IDS = new ArrayList<>();
+    private static final ArrayList<Integer> _SERVO_IDS_USED = new ArrayList<>();
+    private static final int[] _SERVO_IDS = {8, 9, 10, 11, 12, 13, 14, 15};
 
     private static boolean s_initialized = false;
     private final Context _PI4J;
@@ -34,6 +37,7 @@ public class EmakefunMotorHat implements IDriverBoard {
         if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
         s_initialized = true;
         _pca9865 = new PCA9685(pi4j, 1, 0x60);
+        _pca9865.setPWMFreq(50); // 50Hz when using Servos, but can do 1kHz if only Motors
         _PI4J = pi4j;
     }
 
@@ -71,6 +75,20 @@ public class EmakefunMotorHat implements IDriverBoard {
             case 3 -> encoderSetPins.setPins(_PI4J, 16, 26);
             default -> throw new IllegalArgumentException("Encoder Id must be between 0 and 3");
         }
+    }
+
+    @Override
+    public void addServo(ServoSetPin servoSetPin, int id) {
+        if (_SERVO_IDS_USED.contains(id))
+            throw new IllegalArgumentException("Cannot initialize Servo with same Id multiple times.");
+        else if (_SERVO_IDS_USED.size() >= _MAX_SERVOS)
+            throw new IllegalStateException("Cannot instantiate more than 6 Servos.");
+        else if (id > _SERVO_IDS.length || id < 0) 
+            throw new IllegalArgumentException("Servo Id must be between 0 and 7");
+        else 
+            _SERVO_IDS_USED.add(id);
+
+        servoSetPin.setPin(_PI4J, _SERVO_IDS[id]);
     }
 
     private void setPin(int pin, boolean high) {
