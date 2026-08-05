@@ -51,10 +51,22 @@ public class EmakefunMotorHat implements IDriverBoard {
             _DC_MOTOR_IDS.add(id);
 
         switch(id) {
-            case 0: dcMotorSetPins.setPins(0, 1);
-            case 1: dcMotorSetPins.setPins(3, 2);
-            case 2: dcMotorSetPins.setPins(4, 5);
-            case 3: dcMotorSetPins.setPins(7, 6);
+            case 0: {
+                dcMotorSetPins.setPins(0, 1);
+                break;
+            }
+            case 1: {
+                dcMotorSetPins.setPins(3, 2);
+                break;
+            }
+            case 2: { 
+                dcMotorSetPins.setPins(4, 5);
+                break;
+            }
+            case 3: { 
+                dcMotorSetPins.setPins(7, 6);
+                break;
+            }
             default: 
                 throw new IllegalArgumentException("DCMotor Id must be between 0 and 3");
         }
@@ -68,10 +80,24 @@ public class EmakefunMotorHat implements IDriverBoard {
             _ENCODER_IDS.add(id);
 
         switch(id) {
-            case 1: encoderSetPins.setPins(_PI4J, 5, 6);
-            case 2: encoderSetPins.setPins(_PI4J, 13, 19);
-            case 3: encoderSetPins.setPins(_PI4J, 20, 21);
-            case 4: encoderSetPins.setPins(_PI4J, 16, 26);
+            case 0: { 
+                encoderSetPins.setPins(_PI4J, 5, 6);
+                break;
+            }
+            case 1: {
+                encoderSetPins.setPins(_PI4J, 13, 19);
+                break;
+            }
+            case 2: {
+                encoderSetPins.setPins(_PI4J, 20, 21);
+                break;
+            }
+            case 3: {
+                encoderSetPins.setPins(_PI4J, 16, 26);
+                break;
+            }
+            default: 
+                throw new IllegalArgumentException("Encoder Id must be between 0 and 3");
         }
     }
 
