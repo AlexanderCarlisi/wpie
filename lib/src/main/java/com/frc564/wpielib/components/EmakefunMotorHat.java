@@ -14,18 +14,19 @@ import com.pi4j.context.Context;
  * @author Alexander Carlisi
  * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard">Emakefun Motor Drive Board Reference</a>
  * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard/blob/master/schematic/RaspBerryDriverBoard.pdf">PCB Schematic</a>
+ * @implNote Stepper Motors are unimplemented, because they're not on the parts sheet :)
  */
 public class EmakefunMotorHat implements IDriverBoard {
-    private static final int MAX_DC_MOTORS = 4;
-    private static final int MAX_SERVOS = 6;
-    private static final int MAX_STEPPER_MOTORS = 2;
-    private static final int MAX_ENCODERS = 4;
+
+    private static final int _MAX_DC_MOTORS = 4;
+    private static final int _MAX_SERVOS = 6;
+    private static final int _MAX_ENCODERS = 4;
+    // private static final int MAX_STEPPER_MOTORS = 2;
+
     private static final ArrayList<Integer> _DC_MOTOR_IDS = new ArrayList<>();
     private static final ArrayList<Integer> _ENCODER_IDS = new ArrayList<>();
 
-    // Only one should exist
     private static boolean s_initialized = false;
-
     private final Context _PI4J;
     private PCA9685 _pca9865;
 
@@ -36,17 +37,12 @@ public class EmakefunMotorHat implements IDriverBoard {
         _PI4J = pi4j;
     }
 
-    // @Override
-    // public void init(Context pi4j) {
-    //     if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
-    //     s_initialized = true;
-    //     _pca9865 = new PCA9685(pi4j, 1, 0x60); 
-    // }
-
     @Override
     public void addDCMotor(DCMotorSetPins dcMotorSetPins, int id) {
         if (_DC_MOTOR_IDS.contains(id)) 
             throw new IllegalArgumentException("Cannot initialize DCMotor with same Id multiple times.");
+        else if (_DC_MOTOR_IDS.size() >= _MAX_DC_MOTORS)
+            throw new IllegalStateException("Cannot instantiate more than 4 DCMotors.");
         else 
             _DC_MOTOR_IDS.add(id);
 
@@ -76,6 +72,8 @@ public class EmakefunMotorHat implements IDriverBoard {
     public void addEncoder(EncoderSetPins encoderSetPins, int id) {
         if (_ENCODER_IDS.contains(id))
             throw new IllegalArgumentException("Cannot initialize Encoder with same Id multiple times.");
+        else if (_ENCODER_IDS.size() >= _MAX_ENCODERS)
+            throw new IllegalStateException("Cannot instantiate more than 4 Encoders.");
         else 
             _ENCODER_IDS.add(id);
 
