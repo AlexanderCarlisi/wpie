@@ -1,6 +1,6 @@
 package com.frc564.wpielib.components;
 
-import com.pi4j.context.Context;
+import com.frc564.wpielib.PIRobot;
 import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CConfig;
 
@@ -42,14 +42,14 @@ public class PCA9685 {
     /**
      * Initializes the PCA9685 chip at a given I2C address (default 0x60).
      */
-    public PCA9685(Context pi4j, int bus, int address) {
-        I2CConfig config = I2C.newConfigBuilder(pi4j)
+    public PCA9685(int bus, int address) {
+        I2CConfig config = I2C.newConfigBuilder(PIRobot.getPi4JContext())
                 .id("PCA9685-" + Integer.toHexString(address))
                 .bus(bus)
                 .device(address)
                 .build();
 
-        _I2C = pi4j.create(config);
+        _I2C = PIRobot.getPi4JContext().create(config);
 
         // Zero out all 16 channels simultaneously using broadcast registers
         setAllPWM(0, 0);

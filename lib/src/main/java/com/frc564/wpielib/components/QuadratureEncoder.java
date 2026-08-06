@@ -1,6 +1,7 @@
 package com.frc564.wpielib.components;
 
 import com.frc564.wpielib.IEncoder;
+import com.frc564.wpielib.PIRobot;
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 
@@ -32,7 +33,9 @@ public class QuadratureEncoder implements IEncoder {
     } 
 
     @Override
-    public void setPins(Context pi4j, int pinA, int pinB) {
+    public void setPins(int pinA, int pinB) {
+        Context pi4j = PIRobot.getPi4JContext();
+        
         // Configure GPIO Pin A
         DigitalInputConfig configA = DigitalInput.newConfigBuilder(pi4j)
                 .address(pinA)

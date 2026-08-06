@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.frc564.wpielib.IDCMotor;
 import com.frc564.wpielib.IDriverBoard;
+import com.frc564.wpielib.PIRobot;
 import com.frc564.wpielib.IEncoder.EncoderSetPins;
 import com.frc564.wpielib.IServo.ServoSetPin;
 import com.pi4j.context.Context;
@@ -30,15 +31,13 @@ public class EmakefunMotorHat implements IDriverBoard {
     private static final int[] _SERVO_IDS = {8, 9, 10, 11, 12, 13, 14, 15};
 
     private static boolean s_initialized = false;
-    private final Context _PI4J;
     private PCA9685 _pca9865;
 
-    public EmakefunMotorHat(Context pi4j) {
+    public EmakefunMotorHat() {
         if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
         s_initialized = true;
-        _pca9865 = new PCA9685(pi4j, 1, 0x60);
+        _pca9865 = new PCA9685(1, 0x60);
         _pca9865.setPWMFreq(50); // 50Hz when using Servos, but can do 1kHz if only Motors
-        _PI4J = pi4j;
     }
 
     @Override
@@ -69,10 +68,10 @@ public class EmakefunMotorHat implements IDriverBoard {
             _ENCODER_IDS.add(id);
 
         switch(id) {
-            case 0 -> encoderSetPins.setPins(_PI4J, 5, 6);
-            case 1 -> encoderSetPins.setPins(_PI4J, 13, 19);
-            case 2 -> encoderSetPins.setPins(_PI4J, 20, 21);
-            case 3 -> encoderSetPins.setPins(_PI4J, 16, 26);
+            case 0 -> encoderSetPins.setPins(5, 6);
+            case 1 -> encoderSetPins.setPins(13, 19);
+            case 2 -> encoderSetPins.setPins(20, 21);
+            case 3 -> encoderSetPins.setPins(16, 26);
             default -> throw new IllegalArgumentException("Encoder Id must be between 0 and 3");
         }
     }
@@ -88,7 +87,7 @@ public class EmakefunMotorHat implements IDriverBoard {
         else 
             _SERVO_IDS_USED.add(id);
 
-        servoSetPin.setPin(_PI4J, _SERVO_IDS[id]);
+        servoSetPin.setPin(_SERVO_IDS[id]);
     }
 
     private void setPin(int pin, boolean high) {
