@@ -35,7 +35,7 @@ public class QuadratureEncoder implements IEncoder {
     @Override
     public void setPins(int pinA, int pinB) {
         Context pi4j = PIRobot.getPi4JContext();
-        
+
         // Configure GPIO Pin A
         DigitalInputConfig configA = DigitalInput.newConfigBuilder(pi4j)
                 .address(pinA)
