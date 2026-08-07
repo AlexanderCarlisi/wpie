@@ -51,8 +51,7 @@ public class SystemTest {
     @Test
     void subsystemTest() {
         if (pi4j != null) {
-            EmakefunMotorHat driverBoard = new EmakefunMotorHat();
-            PIRobot.setup(pi4j, driverBoard);
+            PIRobot.setup(pi4j, EmakefunMotorHat::new);
         }
         // PIRobot.setup(pi4j, new EmakefunMotorHat(pi4j));
         SubsystemTest subsystem = new SubsystemTest();

@@ -8,7 +8,7 @@ import com.pi4j.io.gpio.digital.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 
+ *
  * QuadratureEncoder
  */
 public class QuadratureEncoder implements IEncoder {
@@ -30,7 +30,7 @@ public class QuadratureEncoder implements IEncoder {
 
     public QuadratureEncoder(int id) {
         init(id);
-    } 
+    }
 
     @Override
     public void setPins(int pinA, int pinB) {
@@ -40,14 +40,12 @@ public class QuadratureEncoder implements IEncoder {
         DigitalInputConfig configA = DigitalInput.newConfigBuilder(pi4j)
                 .address(pinA)
                 .pull(PullResistance.PULL_UP)
-                .provider("pigpio-digital-input")
                 .build();
 
         // Configure GPIO Pin B
         DigitalInputConfig configB = DigitalInput.newConfigBuilder(pi4j)
                 .address(pinB)
                 .pull(PullResistance.PULL_UP)
-                .provider("pigpio-digital-input")
                 .build();
 
         _pinA = pi4j.create(configA);
@@ -65,7 +63,7 @@ public class QuadratureEncoder implements IEncoder {
     private synchronized void updatePosition() {
         int currentState = (getState(_pinA) << 1) | getState(_pinB);
         int index = (lastState << 2) | currentState;
-        
+
         pulseCount.addAndGet(QUADRATURE_TABLE[index]);
         lastState = currentState;
     }
