@@ -10,6 +10,9 @@ import com.pi4j.plugin.mock.provider.i2c.MockI2CProvider;
 import com.pi4j.plugin.mock.provider.pwm.MockPwmProvider;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,13 +60,14 @@ public class SystemTest {
         SubsystemTest subsystem = new SubsystemTest();
 
         // CommandScheduler.getInstance().schedule(
-        //     subsystem.motorTest().andThen(Commands.waitSeconds(3)).andThen(subsystem.encoderTest())
+        //     subsystem.motorTest()
         // );
-        CommandScheduler.getInstance().schedule(
-            subsystem.motorTest()
-        );
         // CommandScheduler.getInstance().schedule(
             // subsystem.encoderTest()
         // );
+        //
+        CommandScheduler.getInstance().schedule(
+            subsystem.motorTest().andThen(new WaitCommand(3)).andThen(subsystem.encoderTest())
+        );
     }
 }
