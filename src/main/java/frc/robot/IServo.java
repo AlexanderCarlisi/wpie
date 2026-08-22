@@ -11,7 +11,8 @@ public interface IServo {
     }
 
     public void setPin(int pin);
-    public void setAngle(double radians);
-    public void setAngle(double radians, double radiansPerSecond);
-    public double getAngle();
+    public void setAngle(double degrees);
+    // public void setAngle(double radians, double radiansPerSecond);
+    public double getAngleDegrees();
+    public int getPin();
 }

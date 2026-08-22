@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.IDCMotor;
 import frc.robot.IEncoder;
+import frc.robot.IServo;
 import frc.robot.components.DCGMN20Motor;
+import frc.robot.components.GenericServo;
 import frc.robot.components.JGB37Motor;
 import frc.robot.components.QuadratureEncoder;
 
@@ -19,6 +21,9 @@ public class DriveExample extends SubsystemBase {
     private final QuadratureEncoder _driveEncoderRight = new QuadratureEncoder(1);
     private final QuadratureEncoder _manipulatorEncoder = new QuadratureEncoder(2);
     private final QuadratureEncoder _intakeEncoder = new QuadratureEncoder(3);
+
+    private final GenericServo _armLigment1 = new GenericServo(0);
+    private final GenericServo _armLigment2 = new GenericServo(1);
 
     public DriveExample() {
         // CommandScheduler.getInstance().registerSubsystem(this);
@@ -102,6 +107,34 @@ public class DriveExample extends SubsystemBase {
 
             Commands.print("========================"),
             Commands.print("  Encoder Test Complete  "),
+            Commands.print("========================")
+        );
+    }
+
+    public Command testServo(String id, IServo servo, double angle, double waitSeconds) {
+        return Commands.sequence(
+            Commands.print(String.format("Servo (%s): ", id)),
+            Commands.runOnce(() -> {servo.setAngle(angle);}),
+            Commands.waitSeconds(waitSeconds)
+        );
+    }
+
+    public Command servoTest() {
+        double startDelaySeconds = 3;
+        double testDelaySeconds = 1;
+        double angle = 40;
+
+        System.out.println("========================");
+        System.out.println("       Servos TEST      ");
+        System.out.println("========================");
+        System.out.println("Starting...");
+        return Commands.sequence(
+            Commands.waitSeconds(startDelaySeconds),
+            testServo("0", _armLigment1, angle, testDelaySeconds),
+            testServo("1", _armLigment2, angle, testDelaySeconds),
+
+            Commands.print("========================"),
+            Commands.print("   Servo Test Complete  "),
             Commands.print("========================")
         );
     }

@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import frc.robot.IDCMotor;
 import frc.robot.IDriverBoard;
-import frc.robot.PIRobot;
+import frc.robot.IServo;
 import frc.robot.IEncoder.EncoderSetPins;
 import frc.robot.IServo.ServoSetPin;
-import com.pi4j.context.Context;
 
 /**
  * 
@@ -132,5 +131,11 @@ public class EmakefunMotorHat implements IDriverBoard {
         dutyCycle = Math.max(Math.min(dutyCycle, 1), -1);
         int pwm = (int) Math.round(dutyCycle * 255);
         setPWM(motor, pwm);
+    }
+
+    @Override
+    public void setAngle(IServo servo, double angleDegrees) {
+        // Don't ask what the *11 +500 /20000 means, its from their own Github. If it works it works
+        setPWM(servo.getPin(), (int) Math.round(4096 * ((angleDegrees*11)+500) / 20000));
     }
 }
