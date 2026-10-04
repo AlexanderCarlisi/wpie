@@ -84,8 +84,6 @@ dependencies {
     api 'com.pi4j:pi4j-plugin-raspberrypi:2.6.0'
     api 'com.pi4j:pi4j-plugin-gpiod:2.6.0'
     api 'com.pi4j:pi4j-plugin-linuxfs:2.6.0'
-
-
 }
 
 test {
