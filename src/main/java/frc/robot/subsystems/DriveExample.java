@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.BooleanSubscriber;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +27,9 @@ public class DriveExample extends SubsystemBase {
     private final GenericServo _armLigment1 = new GenericServo(0);
     private final GenericServo _armLigment2 = new GenericServo(1);
 
+    private final BooleanSubscriber motor_test_sub = NetworkTableInstance.getDefault().getBooleanTopic("Test Motor").getEntry(false);
+    private boolean motor_test_running = false;
+
     public DriveExample() {
         // CommandScheduler.getInstance().registerSubsystem(this);
     }
@@ -32,6 +37,16 @@ public class DriveExample extends SubsystemBase {
     // public Command driveForward(double dutyCycle, double seconds) {
     //     return new DriveCommand(this, dutyCycle, seconds);
     // }
+
+
+    @Override
+    public void periodic() {
+        if(motor_test_sub.get() && !motor_test_running) {
+            _driveMotorLeft.setDutyCycle(0.5);
+        } else if (!motor_test_sub.get() && motor_test_running) {
+            _driveMotorLeft.setDutyCycle(0);
+        }
+    }
 
     private Command runMotor(IDCMotor motor, double dutyCycle, double seconds) {
         return Commands.runOnce(
