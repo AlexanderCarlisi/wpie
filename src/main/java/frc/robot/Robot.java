@@ -37,19 +37,24 @@ public class Robot extends TimedRobot {
     DriverStation.silenceJoystickConnectionWarning(true);
 
     Context pi4j;
-    if (isSimulation()) {
-      pi4j = Pi4J.newContextBuilder()
-      .add(
-        MockI2CProvider.newInstance(),
-        MockDigitalOutputProvider.newInstance(),
-        MockDigitalInputProvider.newInstance(),
-        MockPwmProvider.newInstance()
-      )
-      .add(new MockPlatform())
-      .build();
-    } else {
-      pi4j = Pi4J.newAutoContext();
-    }
+
+    // Simulate on Laptop
+    // if (isSimulation()) {
+    //   pi4j = Pi4J.newContextBuilder()
+    //   .add(
+    //     MockI2CProvider.newInstance(),
+    //     MockDigitalOutputProvider.newInstance(),
+    //     MockDigitalInputProvider.newInstance(),
+    //     MockPwmProvider.newInstance()
+    //   )
+    //   .add(new MockPlatform())
+    //   .build();
+    // } else {
+    //   pi4j = Pi4J.newAutoContext();
+    // }
+
+    // Run on PI
+    pi4j = Pi4J.newAutoContext();
 
     // MockI2CProvider mockI2CProvider = pi4j.provider("mock-i2c");
     PIRobot.setup(pi4j, EmakefunMotorHat::new);
