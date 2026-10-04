@@ -1,0 +1,28 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f0ce7e9b934, pid=308315, tid=308316
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.16+8 (17.0.16+8) (build 17.0.16+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (17.0.16+8, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h %d %F %I" (or dumping to /home/lilroo/Code/frcvscode/WPIE/wpie/core.308315)
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:43815 -Djava.library.path=/home/lilroo/Code/frcvscode/WPIE/wpie/build/jni/release -XX:+ShowCodeDetailsInExceptionMessages -Dsun.java2d.opengl=false -Dsun.java2d.xrender=false frc.robot.Main
+
+Host: AMD Ryzen 5 5600H with Radeon Graphics, 12 cores, 14G, EndeavourOS Linux
+Time: Fri Aug 21 18:26:55 2026 EDT elapsed time: 25.411719 seconds (0d 0h 0m 25s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f0ce002c8c0):  JavaThread "main" [_thread_in_native, id=308316
