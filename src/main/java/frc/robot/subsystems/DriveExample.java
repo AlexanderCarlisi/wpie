@@ -53,12 +53,12 @@ public class DriveExample extends SubsystemBase {
 
     @Override
     public void periodic() {
-        boolean motortest = testsub.get();
-        if(motortest && !motor_test_running) {
-            _driveMotorLeft.setDutyCycle(0.5);
-        } else if (!motortest && motor_test_running) {
-            _driveMotorLeft.setDutyCycle(0);
-        }
+        // boolean motortest = testsub.get();
+        // if(motortest && !motor_test_running) {
+        //     _driveMotorLeft.setDutyCycle(0.5);
+        // } else if (!motortest && motor_test_running) {
+        //     _driveMotorLeft.setDutyCycle(0);
+        // }
     }
 
     private Command runMotor(IDCMotor motor, double dutyCycle, double seconds) {
