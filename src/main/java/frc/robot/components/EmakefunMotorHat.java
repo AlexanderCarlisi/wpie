@@ -10,7 +10,6 @@ import frc.robot.IEncoder.EncoderSetPins;
 import frc.robot.IServo.ServoSetPin;
 
 /**
- *
  * EmakefunMotorHat
  *
  * @author Alexander Carlisi
@@ -31,15 +30,15 @@ public class EmakefunMotorHat implements IDriverBoard {
     private static final int[] _SERVO_IDS = {8, 9, 10, 11, 12, 13, 14, 15};
 
     private static boolean s_initialized = false;
-    private PCA9685 _pca9865;
+    private PCA9685 _pca9685; // Fixed typo from _pca9865
 
     private static final ArrayList<IEncoder> _ENCODER_REFERENCES = new ArrayList<>();
 
     public EmakefunMotorHat() {
         if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
         s_initialized = true;
-        _pca9865 = new PCA9685(1, 0x60);
-        _pca9865.setPWMFreq(50); // 50Hz when using Servos, but can do 1kHz if only Motors
+        _pca9685 = new PCA9685(1, 0x60);
+        _pca9685.setPWMFreq(50); // 50Hz when using Servos, but can do 1kHz if only Motors
     }
 
     @Override
@@ -83,8 +82,8 @@ public class EmakefunMotorHat implements IDriverBoard {
         if (_SERVO_IDS_USED.contains(id))
             throw new IllegalArgumentException("Cannot initialize Servo with same Id multiple times.");
         else if (_SERVO_IDS_USED.size() >= _MAX_SERVOS)
-            throw new IllegalStateException("Cannot instantiate more than 6 Servos.");
-        else if (id > _SERVO_IDS.length || id < 0)
+            throw new IllegalStateException("Cannot instantiate more than 8 Servos."); // Updated to match max
+        else if (id >= _SERVO_IDS.length || id < 0) // Fixed out-of-bounds check
             throw new IllegalArgumentException("Servo Id must be between 0 and 7");
         else
             _SERVO_IDS_USED.add(id);
@@ -93,13 +92,13 @@ public class EmakefunMotorHat implements IDriverBoard {
     }
 
     private void setPin(int pin, boolean high) {
-        if (high) _pca9865.setPWM(pin, 4096, 0);
-        else _pca9865.setPWM(pin, 0, 4096);
+        if (high) _pca9685.setPWM(pin, 4096, 0);
+        else _pca9685.setPWM(pin, 0, 4096);
     }
 
     private void setPWM(int pin, int value) {
-        if (value > 4095) _pca9865.setPWM(pin, 4096, 0);
-        else _pca9865.setPWM(pin, 0, value);
+        if (value > 4095) _pca9685.setPWM(pin, 4096, 0);
+        else _pca9685.setPWM(pin, 0, value);
     }
 
     /**
@@ -138,10 +137,8 @@ public class EmakefunMotorHat implements IDriverBoard {
 
     @Override
     public void setAngle(IServo servo, double angleDegrees) {
-        // Don't ask what the *11 +500 /20000 means, its from their own Github. If it works it works
-        setPWM(servo.getPin(), (int) Math.round(4096 * ((angleDegrees*11)+500) / 20000));
+        setPWM(servo.getPin(), (int) Math.round(4096 * ((angleDegrees * 11) + 500) / 20000));
     }
-
 
     @Override
     public void addEncoderTest(IEncoder encoder) {
