@@ -18,8 +18,14 @@ import frc.robot.components.QuadratureEncoder;
 public class DriveExample extends SubsystemBase {
     private final JGB37Motor _driveMotorLeft = new JGB37Motor(0, true);
     private final JGB37Motor _driveMotorRight = new JGB37Motor(1);
-    private final DCGMN20Motor _manipulatorMotor = new DCGMN20Motor(2);
-    private final DCGMN20Motor _intakeMotor = new DCGMN20Motor(3);
+    // private final DCGMN20Motor _manipulatorMotor = new DCGMN20Motor(2);
+    // private final DCGMN20Motor _intakeMotor = new DCGMN20Motor(3);
+
+    private final JGB37Motor _manipulatorMotor = new JGB37Motor(2);
+    private final JGB37Motor _intakeMotor = new JGB37Motor(3);
+    private final JGB37Motor[] _motors = new JGB37Motor[] {
+        _driveMotorLeft, _driveMotorRight, _manipulatorMotor, _intakeMotor
+    };
 
     private final QuadratureEncoder _driveEncoderLeft = new QuadratureEncoder(0);
     private final QuadratureEncoder _driveEncoderRight = new QuadratureEncoder(1);
@@ -62,6 +68,12 @@ public class DriveExample extends SubsystemBase {
         ).andThen(Commands.runOnce(
             () -> {motor.setDutyCycle(0);}
         ));
+    }
+
+    public Command runMotor(int motorId, double dutyCycle) {
+        return Commands.runOnce(
+            () -> {_motors[motorId].setDutyCycle(dutyCycle);}
+            , this);
     }
 
     private Command printEncoderTick(String prefix, IEncoder encoder) {
