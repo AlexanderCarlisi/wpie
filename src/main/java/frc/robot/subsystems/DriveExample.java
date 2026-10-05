@@ -125,7 +125,7 @@ public class DriveExample extends SubsystemBase {
     public Command encoderTest() {
         double dutyCycle = 0.25;
         double startDelaySeconds = 3;
-        double testDelaySeconds = 1;
+        double testDelaySeconds = 5;
 
         System.out.println("========================");
         System.out.println("       Encoder TEST     ");
@@ -135,9 +135,9 @@ public class DriveExample extends SubsystemBase {
             Commands.waitSeconds(startDelaySeconds),
 
             testEncoder("1", _driveEncoderLeft, _driveMotorLeft, dutyCycle, testDelaySeconds),
-            testEncoder("2", _driveEncoderRight, _driveMotorRight, dutyCycle, testDelaySeconds),
-            testEncoder("3", _manipulatorEncoder, _manipulatorMotor, dutyCycle, testDelaySeconds),
-            testEncoder("4", _intakeEncoder, _intakeMotor, dutyCycle, testDelaySeconds),
+            // testEncoder("2", _driveEncoderRight, _driveMotorRight, dutyCycle, testDelaySeconds),
+            // testEncoder("3", _manipulatorEncoder, _manipulatorMotor, dutyCycle, testDelaySeconds),
+            // testEncoder("4", _intakeEncoder, _intakeMotor, dutyCycle, testDelaySeconds),
 
             Commands.print("========================"),
             Commands.print("  Encoder Test Complete  "),
