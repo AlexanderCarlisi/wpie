@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 import frc.robot.IDCMotor;
 import frc.robot.IDriverBoard;
+import frc.robot.IEncoder;
 import frc.robot.IServo;
 import frc.robot.IEncoder.EncoderSetPins;
 import frc.robot.IServo.ServoSetPin;
 
 /**
- * 
+ *
  * EmakefunMotorHat
- * 
+ *
  * @author Alexander Carlisi
  * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard">Emakefun Motor Drive Board Reference</a>
  * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard/blob/master/schematic/RaspBerryDriverBoard.pdf">PCB Schematic</a>
@@ -32,6 +33,8 @@ public class EmakefunMotorHat implements IDriverBoard {
     private static boolean s_initialized = false;
     private PCA9685 _pca9865;
 
+    private static final ArrayList<IEncoder> _ENCODER_REFERENCES = new ArrayList<>();
+
     public EmakefunMotorHat() {
         if (s_initialized) throw new IllegalStateException("Only one EmakefunMotorHat can be initialized.");
         s_initialized = true;
@@ -41,11 +44,11 @@ public class EmakefunMotorHat implements IDriverBoard {
 
     @Override
     public void addDCMotor(DCMotorSetPins dcMotorSetPins, int id) {
-        if (_DC_MOTOR_IDS.contains(id)) 
+        if (_DC_MOTOR_IDS.contains(id))
             throw new IllegalArgumentException("Cannot initialize DCMotor with same Id multiple times.");
         else if (_DC_MOTOR_IDS.size() >= _MAX_DC_MOTORS)
             throw new IllegalStateException("Cannot instantiate more than 4 DCMotors.");
-        else 
+        else
             _DC_MOTOR_IDS.add(id);
 
         switch(id) {
@@ -63,7 +66,7 @@ public class EmakefunMotorHat implements IDriverBoard {
             throw new IllegalArgumentException("Cannot initialize Encoder with same Id multiple times.");
         else if (_ENCODER_IDS.size() >= _MAX_ENCODERS)
             throw new IllegalStateException("Cannot instantiate more than 4 Encoders.");
-        else 
+        else
             _ENCODER_IDS.add(id);
 
         switch(id) {
@@ -81,9 +84,9 @@ public class EmakefunMotorHat implements IDriverBoard {
             throw new IllegalArgumentException("Cannot initialize Servo with same Id multiple times.");
         else if (_SERVO_IDS_USED.size() >= _MAX_SERVOS)
             throw new IllegalStateException("Cannot instantiate more than 6 Servos.");
-        else if (id > _SERVO_IDS.length || id < 0) 
+        else if (id > _SERVO_IDS.length || id < 0)
             throw new IllegalArgumentException("Servo Id must be between 0 and 7");
-        else 
+        else
             _SERVO_IDS_USED.add(id);
 
         servoSetPin.setPin(_SERVO_IDS[id]);
@@ -101,7 +104,7 @@ public class EmakefunMotorHat implements IDriverBoard {
 
     /**
      * Sets raw 12-bit PWM ON/OFF values (0 to 4095) for a specific channel.
-     * 
+     *
      * @param id MotorId
      * @param pwm [-255, 255], +ccw/-cw
      */
@@ -122,7 +125,7 @@ public class EmakefunMotorHat implements IDriverBoard {
 
     /**
      * Set PWM as a duty cycle
-     * 
+     *
      * @param channel PWM Channel
      * @param dutyCycle [-1,1] +ccw/-cw
      */
@@ -137,5 +140,18 @@ public class EmakefunMotorHat implements IDriverBoard {
     public void setAngle(IServo servo, double angleDegrees) {
         // Don't ask what the *11 +500 /20000 means, its from their own Github. If it works it works
         setPWM(servo.getPin(), (int) Math.round(4096 * ((angleDegrees*11)+500) / 20000));
+    }
+
+
+    @Override
+    public void addEncoderTest(IEncoder encoder) {
+        _ENCODER_REFERENCES.add(encoder);
+    }
+
+    @Override
+    public void update() {
+        for (IEncoder encoder : _ENCODER_REFERENCES) {
+            encoder.update();
+        }
     }
 }

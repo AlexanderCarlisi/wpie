@@ -4,7 +4,7 @@ import frc.robot.IEncoder.EncoderSetPins;
 import frc.robot.IServo.ServoSetPin;
 
 /**
- * 
+ *
  * IDriverBoard
  */
 public interface IDriverBoard {
@@ -20,4 +20,8 @@ public interface IDriverBoard {
     public void addEncoder(EncoderSetPins encoderSetPins, int id);
     public void addServo(ServoSetPin servoSetPin, int id);
     public void setAngle(IServo servo, double angleDegrees);
+
+
+    public void update();
+    public void addEncoderTest(IEncoder encoder);
 }
