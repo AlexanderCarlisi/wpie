@@ -66,9 +66,9 @@ public class QuadratureEncoder implements IEncoder {
         lastState = (getState(_pinA) << 1) | getState(_pinB);
 
         // Attach listeners for both rising and falling edges
-        // DigitalStateChangeListener listener = event -> updatePosition();
-        // _pinA.addListener(listener);
-        // _pinB.addListener(listener);
+        DigitalStateChangeListener listener = event -> updatePosition();
+        _pinA.addListener(listener);
+        _pinB.addListener(listener);
     }
 
     private synchronized void updatePosition() {
@@ -116,6 +116,6 @@ public class QuadratureEncoder implements IEncoder {
 
     @Override
     public void update() {
-        updatePosition();
+        // updatePosition();
     }
 }
