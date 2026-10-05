@@ -79,8 +79,10 @@ public class QuadratureEncoder implements IEncoder {
         pulseCount.addAndGet(QUADRATURE_TABLE[index]);
 
         if (lastState != currentState) {
-            CommandScheduler.getInstance().schedule(Commands.print(">"+lastState+","+currentState+"<"));
+            CommandScheduler.getInstance().schedule(Commands.print(">"+lastState+","+currentState+"<"+pulseCount.get()+"-"+QUADRATURE_TABLE[index]));
+
         }
+
 
         // if (_pinA.isHigh()) {
         //     CommandScheduler.getInstance().schedule(Commands.print("High"));
