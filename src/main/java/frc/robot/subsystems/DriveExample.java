@@ -32,9 +32,8 @@ public class DriveExample extends SubsystemBase {
     private final QuadratureEncoder _manipulatorEncoder = new QuadratureEncoder(2);
     private final QuadratureEncoder _intakeEncoder = new QuadratureEncoder(3);
 
-    private final GenericServo _armLigment1 = new GenericServo(0);
+    private final GenericServo _armLigment1 = new GenericServo(6);
     private final GenericServo _armLigment2 = new GenericServo(1);
-
 
     private final NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
     private final NetworkTable table = ntinst.getTable("Testing");

@@ -57,7 +57,7 @@ public class RobotContainer {
         // m_driverController.a().onTrue(m_exampleDrive.runMotor(0, 0.5));
         // m_driverController.a().onFalse(m_exampleDrive.runMotor(0, 0));
 
-        m_driverController.a().onTrue(m_exampleDrive.encoderTest());
+        m_driverController.a().onTrue(m_exampleDrive.servoTest());
         m_driverController.b().whileTrue(m_exampleDrive.runMotor(0, 0.8));
         m_driverController.b().onFalse(m_exampleDrive.runMotor(0, 0));
         m_driverController.x().whileTrue(m_exampleDrive.runMotor(1, 0.8));
