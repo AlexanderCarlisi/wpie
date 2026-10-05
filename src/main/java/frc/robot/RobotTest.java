@@ -34,12 +34,7 @@ public class RobotTest extends TimedRobot {
   public RobotTest() {
     DriverStation.silenceJoystickConnectionWarning(true);
 
-    try {
-        Test_SERVO testservo = new Test_SERVO();
-        testservo.test();
-    } catch (Exception e) {
-        System.out.println(e.getStackTrace());
-    }
+
   }
 
   /**
@@ -68,7 +63,12 @@ public class RobotTest extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-
+      try {
+          Test_SERVO testservo = new Test_SERVO();
+          testservo.test();
+      } catch (Exception e) {
+          System.out.println(e.getStackTrace());
+      }
   }
 
   /** This function is called periodically during autonomous. */
