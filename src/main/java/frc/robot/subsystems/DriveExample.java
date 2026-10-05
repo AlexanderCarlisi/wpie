@@ -44,6 +44,7 @@ public class DriveExample extends SubsystemBase {
 
     public DriveExample() {
         // CommandScheduler.getInstance().registerSubsystem(this);
+        _driveMotorLeft.attachEncoder(_driveEncoderLeft);
     }
 
     // public Command driveForward(double dutyCycle, double seconds) {
