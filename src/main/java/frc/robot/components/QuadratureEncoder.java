@@ -26,11 +26,17 @@ public class QuadratureEncoder implements IEncoder {
 
     // Quadrature state-transition lookup table for 4x decoding resolution
     // Indexes: (oldState << 2) | newState
+    // private static final int[] QUADRATURE_TABLE = {
+    //      0, -1,  1,  0,
+    //      1,  0,  0, -1,
+    //     -1,  0,  0,  1,
+    //      0,  1, -1,  0
+    // };
     private static final int[] QUADRATURE_TABLE = {
-         0, -1,  1,  0,
-         1,  0,  0, -1,
-        -1,  0,  0,  1,
-         0,  1, -1,  0
+        0,  1, -1,  0,  // lastState = 0 (00)
+        -1,  0,  0,  1,  // lastState = 1 (01)
+        1,  0,  0, -1,  // lastState = 2 (10)
+        0, -1,  1,  0   // lastState = 3 (11)
     };
 
     public QuadratureEncoder(int id) {
