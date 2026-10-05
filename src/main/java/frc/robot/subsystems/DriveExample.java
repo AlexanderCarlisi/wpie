@@ -93,9 +93,9 @@ public class DriveExample extends SubsystemBase {
     }
 
     public Command motorTest() {
-        double dutyCycle = 0.25;
+        double dutyCycle = 0.5;
         double startDelaySeconds = 3;
-        double testDelaySeconds = 1;
+        double testDelaySeconds = 3;
 
         System.out.println("========================");
         System.out.println("       MOTOR TEST       ");
@@ -104,9 +104,9 @@ public class DriveExample extends SubsystemBase {
         return Commands.sequence(
             Commands.waitSeconds(startDelaySeconds),
             testMotor("1", _driveMotorLeft, dutyCycle, testDelaySeconds),
-            testMotor("2", _driveMotorLeft, dutyCycle, testDelaySeconds),
-            testMotor("3", _driveMotorLeft, dutyCycle, testDelaySeconds),
-            testMotor("4", _driveMotorLeft, dutyCycle, testDelaySeconds),
+            testMotor("2", _driveMotorRight, dutyCycle, testDelaySeconds),
+            testMotor("3", _manipulatorMotor, dutyCycle, testDelaySeconds),
+            testMotor("4", _intakeMotor, dutyCycle, testDelaySeconds),
             Commands.print("========================"),
             Commands.print("   Motor Test Complete  "),
             Commands.print("========================")
