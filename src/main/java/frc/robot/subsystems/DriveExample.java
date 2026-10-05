@@ -38,6 +38,8 @@ public class DriveExample extends SubsystemBase {
     private final GenericServo _armLigment4 = new GenericServo(3);
     private final GenericServo _armLigment5 = new GenericServo(4);
     private final GenericServo _armLigment6 = new GenericServo(5);
+    private final GenericServo _armLigment7 = new GenericServo(6);
+    private final GenericServo _armLigment8 = new GenericServo(7);
 
     private final NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
     private final NetworkTable table = ntinst.getTable("Testing");
@@ -179,6 +181,8 @@ public class DriveExample extends SubsystemBase {
             testServo("3", _armLigment4, angle, testDelaySeconds),
             testServo("4", _armLigment5, angle, testDelaySeconds),
             testServo("5", _armLigment6, angle, testDelaySeconds),
+            testServo("6", _armLigment7, angle, testDelaySeconds),
+            testServo("7", _armLigment8, angle, testDelaySeconds),
 
             Commands.print("========================"),
             Commands.print("   Servo Test Complete  "),
