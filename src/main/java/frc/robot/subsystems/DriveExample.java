@@ -82,8 +82,7 @@ public class DriveExample extends SubsystemBase {
     }
 
     public Command printEncoderTick(int motorId) {
-        return Commands.runOnce(() -> Commands.print(String.valueOf(_motors[motorId].getEncoder().getDistanceTicks()))
-            , this);
+        return Commands.print(">>>"+_motors[motorId].getEncoder().getDistanceTicks());
     }
 
     public void setDriveDutyCycle(double left, double right) {
