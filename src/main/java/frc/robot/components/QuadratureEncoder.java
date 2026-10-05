@@ -2,8 +2,13 @@ package frc.robot.components;
 
 import frc.robot.IEncoder;
 import frc.robot.PIRobot;
+import frc.robot.subsystems.ExampleSubsystem;
+
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
+
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -61,6 +66,7 @@ public class QuadratureEncoder implements IEncoder {
     }
 
     private synchronized void updatePosition() {
+        CommandScheduler.getInstance().schedule(Commands.print(">>UPDATING ENCODER<<"));
         int currentState = (getState(_pinA) << 1) | getState(_pinB);
         int index = (lastState << 2) | currentState;
 
