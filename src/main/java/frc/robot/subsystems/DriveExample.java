@@ -93,7 +93,7 @@ public class DriveExample extends SubsystemBase {
     }
 
     public Command motorTest() {
-        double dutyCycle = 0.5;
+        double dutyCycle = 0.8;
         double startDelaySeconds = 3;
         double testDelaySeconds = 3;
 
