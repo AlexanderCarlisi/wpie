@@ -78,7 +78,8 @@ public class DriveExample extends SubsystemBase {
     }
 
     private Command printEncoderTick(String prefix, IEncoder encoder) {
-        return Commands.print(prefix + String.valueOf(encoder.getDistanceTicks()));
+        // Use runOnce with a lambda so getDistanceTicks() is called live when the command executes
+        return Commands.runOnce(() -> System.out.println(prefix + encoder.getDistanceTicks()));
     }
 
     public Command printEncoderTick(int motorId) {
