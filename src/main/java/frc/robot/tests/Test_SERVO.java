@@ -10,7 +10,7 @@ public class Test_SERVO {
 
     // Default I2C address for DFRobot Motor Driver HAT / PCA9685 compatible controllers
     private final int I2C_BUS = 1;
-    private final int I2C_ADDRESS = 0x10; // Change to 0x40 if using standard PCA9685 HAT variants
+    private final int I2C_ADDRESS = 0x40; // Change to 0x40 if using standard PCA9685 HAT variants
 
     // PCA9685 Register definitions
     private final int MODE1 = 0x00;
@@ -41,17 +41,19 @@ public class Test_SERVO {
         // Example: Control Servo connected to channel 0 (Miuzei MG90S)
         int servoChannel = 0;
 
-        System.out.println("Moving servo to 0 degrees (Min Position)...");
-        setServoAngle(servoChannel, 0);
-        Thread.sleep(1000);
+        for (servoChannel = 0; servoChannel < 8; servoChannel++) {
+            System.out.println("Moving servo to 0 degrees (Min Position)...");
+            setServoAngle(servoChannel, 0);
+            Thread.sleep(1000);
 
-        System.out.println("Moving servo to 90 degrees (Center Position)...");
-        setServoAngle(servoChannel, 90);
-        Thread.sleep(1000);
+            System.out.println("Moving servo to 90 degrees (Center Position)...");
+            setServoAngle(servoChannel, 90);
+            Thread.sleep(1000);
 
-        System.out.println("Moving servo to 180 degrees (Max Position)...");
-        setServoAngle(servoChannel, 180);
-        Thread.sleep(1000);
+            System.out.println("Moving servo to 180 degrees (Max Position)...");
+            setServoAngle(servoChannel, 180);
+            Thread.sleep(1000);
+        }
 
         // Shutdown Pi4J context
         pi4j.shutdown();
