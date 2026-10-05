@@ -66,7 +66,8 @@ public class QuadratureEncoder implements IEncoder {
     }
 
     private synchronized void updatePosition() {
-        CommandScheduler.getInstance().schedule(Commands.print(">>UPDATING ENCODER<<"));
+        // CommandScheduler.getInstance().schedule(Commands.print(">>UPDATING ENCODER<<"));
+        System.out.println("\n>>>HERE\n<<<");
         int currentState = (getState(_pinA) << 1) | getState(_pinB);
         int index = (lastState << 2) | currentState;
 
