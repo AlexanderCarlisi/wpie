@@ -76,6 +76,19 @@ public class QuadratureEncoder implements IEncoder {
             CommandScheduler.getInstance().schedule(Commands.print(">"+lastState+","+currentState+"<"));
         }
 
+        if (_pinA.isHigh()) {
+            CommandScheduler.getInstance().schedule(Commands.print("High"));
+        }
+        if (_pinA.isLow()) {
+            CommandScheduler.getInstance().schedule(Commands.print("Low"));
+        }
+        if (_pinA.isOff()) {
+            CommandScheduler.getInstance().schedule(Commands.print("Off"));
+        }
+        if (_pinA.isOn()) {
+            CommandScheduler.getInstance().schedule(Commands.print("On"));
+        }
+
         lastState = currentState;
     }
 
