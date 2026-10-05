@@ -60,17 +60,22 @@ public class QuadratureEncoder implements IEncoder {
         lastState = (getState(_pinA) << 1) | getState(_pinB);
 
         // Attach listeners for both rising and falling edges
-        DigitalStateChangeListener listener = event -> updatePosition();
-        _pinA.addListener(listener);
-        _pinB.addListener(listener);
+        // DigitalStateChangeListener listener = event -> updatePosition();
+        // _pinA.addListener(listener);
+        // _pinB.addListener(listener);
     }
 
     private synchronized void updatePosition() {
-        CommandScheduler.getInstance().schedule(Commands.print(">>UPDATING ENCODER<<"));
+        // CommandScheduler.getInstance().schedule(Commands.print(">>UPDATING ENCODER<<"))
         int currentState = (getState(_pinA) << 1) | getState(_pinB);
         int index = (lastState << 2) | currentState;
 
         pulseCount.addAndGet(QUADRATURE_TABLE[index]);
+
+        if (lastState != currentState) {
+            CommandScheduler.getInstance().schedule(Commands.print(">"+lastState+","+currentState+"<"));
+        }
+
         lastState = currentState;
     }
 
