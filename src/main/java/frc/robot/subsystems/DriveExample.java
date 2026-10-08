@@ -213,11 +213,11 @@ public class DriveExample extends SubsystemBase {
             Commands.waitSeconds(startDelaySeconds),
 
             Commands.print("To 0"),
-            Commands.runOnce(() -> {_servos[servoId].setAngle(0);}),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(90);}),
             Commands.waitSeconds(testDelaySeconds),
 
             Commands.print("To 90"),
-            Commands.runOnce(() -> {_servos[servoId].setAngle(90);}),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(0);}),
             Commands.waitSeconds(testDelaySeconds),
 
             Commands.print("To 45"),
