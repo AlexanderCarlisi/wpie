@@ -19,7 +19,7 @@ public class GenericServo implements IServo {
     @Override
     public void setAngle(double degrees) {
         _angleDegrees = degrees;
-        PIRobot.getDriverBoard().setAngle(this, _pin);
+        PIRobot.getDriverBoard().setAngle(this, degrees);
     }
 
     @Override
