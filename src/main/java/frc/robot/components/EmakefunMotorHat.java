@@ -137,7 +137,13 @@ public class EmakefunMotorHat implements IDriverBoard {
 
     @Override
     public void setAngle(IServo servo, double angleDegrees) {
-        setPWM(servo.getPin(), (int) Math.round(4096 * ((angleDegrees * 11) + 500) / 20000));
+        // Clamp angle between 0 and 180 degrees for safety
+        angleDegrees = Math.max(0, Math.min(180, angleDegrees));
+
+        // Map 0-180 degrees to approximately 1.0ms (205 ticks) to 2.0ms (410 ticks) pulse widths
+        int pulseTicks = (int) Math.round(205 + (angleDegrees / 180.0) * (410 - 205));
+
+        setPWM(servo.getPin(), pulseTicks);
     }
 
     @Override
