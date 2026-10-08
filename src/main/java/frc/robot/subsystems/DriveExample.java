@@ -157,7 +157,7 @@ public class DriveExample extends SubsystemBase {
             Commands.waitSeconds(startDelaySeconds),
 
             testEncoder("1", _driveEncoderLeft, _driveMotorLeft, dutyCycle, testDelaySeconds),
-            // testEncoder("2", _driveEncoderRight, _driveMotorRight, dutyCycle, testDelaySeconds),
+            testEncoder("2", _driveEncoderRight, _driveMotorRight, dutyCycle, testDelaySeconds),
             // testEncoder("3", _manipulatorEncoder, _manipulatorMotor, dutyCycle, testDelaySeconds),
             // testEncoder("4", _intakeEncoder, _intakeMotor, dutyCycle, testDelaySeconds),
 
@@ -201,7 +201,7 @@ public class DriveExample extends SubsystemBase {
         );
     }
 
-    public Command servoTest(int servoId) {
+    public Command servoTestBetter(int servoId) {
         double startDelaySeconds = 1;
         double testDelaySeconds = 3;
 
@@ -217,7 +217,7 @@ public class DriveExample extends SubsystemBase {
             Commands.waitSeconds(testDelaySeconds),
 
             Commands.print("To 90"),
-            Commands.runOnce(() -> {_servos[servoId].setAngle(0);}),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(90);}),
             Commands.waitSeconds(testDelaySeconds),
 
             Commands.print("To 45"),
@@ -228,16 +228,16 @@ public class DriveExample extends SubsystemBase {
             Commands.runOnce(() -> {_servos[servoId].setAngle(180);}),
             Commands.waitSeconds(testDelaySeconds),
 
-            Commands.print("To 340"),
-            Commands.runOnce(() -> {_servos[servoId].setAngle(340);}),
+            Commands.print("To 20"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(20);}),
             Commands.waitSeconds(testDelaySeconds),
 
-            Commands.print("To 360"),
-            Commands.runOnce(() -> {_servos[servoId].setAngle(360);}),
+            Commands.print("To 100"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(100);}),
             Commands.waitSeconds(testDelaySeconds),
 
-            Commands.print("To 420"),
-            Commands.runOnce(() -> {_servos[servoId].setAngle(420);}),
+            Commands.print("To 200 (clamp to 180)"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(200);}),
             Commands.waitSeconds(testDelaySeconds),
 
             Commands.print("========================"),
@@ -247,14 +247,22 @@ public class DriveExample extends SubsystemBase {
 
     public Command servoTestAll() {
         return Commands.sequence(
-            servoTest(0),
-            servoTest(1),
-            servoTest(2),
-            servoTest(3),
-            servoTest(4),
-            servoTest(5),
-            servoTest(6),
-            servoTest(7)
+            servoTestBetter(0),
+            servoTestBetter(1),
+            servoTestBetter(2),
+            servoTestBetter(3),
+            servoTestBetter(4),
+            servoTestBetter(5),
+            servoTestBetter(6),
+            servoTestBetter(7)
+        );
+    }
+
+    public Command testAll() {
+        return Commands.sequence(
+            motorTest(),
+            encoderTest(),
+            servoTestAll()
         );
     }
 }

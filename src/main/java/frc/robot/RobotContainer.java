@@ -57,12 +57,12 @@ public class RobotContainer {
         // m_driverController.a().onTrue(m_exampleDrive.runMotor(0, 0.5));
         // m_driverController.a().onFalse(m_exampleDrive.runMotor(0, 0));
 
-        m_driverController.a().onTrue(m_exampleDrive.servoTest());
-        m_driverController.b().whileTrue(m_exampleDrive.runMotor(0, 0.8));
-        m_driverController.b().onFalse(m_exampleDrive.runMotor(0, 0));
-        m_driverController.x().whileTrue(m_exampleDrive.runMotor(1, 0.8));
-        m_driverController.x().onFalse(m_exampleDrive.runMotor(1, 0));
-        m_driverController.y().onTrue(m_exampleDrive.printEncoderTick(0));
+        // m_driverController.a().onTrue(m_exampleDrive.servoTest());
+        // m_driverController.b().whileTrue(m_exampleDrive.runMotor(0, 0.8));
+        // m_driverController.b().onFalse(m_exampleDrive.runMotor(0, 0));
+        // m_driverController.x().whileTrue(m_exampleDrive.runMotor(1, 0.8));
+        // m_driverController.x().onFalse(m_exampleDrive.runMotor(1, 0));
+        // m_driverController.y().onTrue(m_exampleDrive.printEncoderTick(0));
     }
 
     /**
@@ -74,6 +74,7 @@ public class RobotContainer {
         // An example command will be run in autonomous
         // return m_exampleDrive.motorTest();
         // return m_exampleDrive.servoTestAll();
-        return m_exampleDrive.encoderTest();
+        // return m_exampleDrive.encoderTest();
+        return m_exampleDrive.testAll();
     }
 }
