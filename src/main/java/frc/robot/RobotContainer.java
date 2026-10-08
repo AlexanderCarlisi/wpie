@@ -75,6 +75,7 @@ public class RobotContainer {
         // return m_exampleDrive.motorTest();
         // return m_exampleDrive.servoTestAll();
         // return m_exampleDrive.encoderTest();
-        return m_exampleDrive.testAll();
+        // return m_exampleDrive.testAll();
+        return m_exampleDrive.testCurrentDraw(0.75);
     }
 }

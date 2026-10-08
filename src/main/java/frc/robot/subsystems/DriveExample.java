@@ -265,4 +265,11 @@ public class DriveExample extends SubsystemBase {
             servoTestAll()
         );
     }
+
+    public Command testCurrentDraw(double dutyCycle) {
+        return Commands.parallel(
+            runMotor(_driveMotorLeft, dutyCycle, 5),
+            runMotor(_manipulatorMotor, dutyCycle, 5)
+        );
+    }
 }
