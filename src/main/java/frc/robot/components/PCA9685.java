@@ -11,9 +11,9 @@ import com.pi4j.io.i2c.I2CConfig;
  * </p>
  * <p>
  * Although this is the case, many boards utilize this chip for other purposes.
- * For example Motor Driver Boards may utilize this chip for controlling Motors and Servos. 
+ * For example Motor Driver Boards may utilize this chip for controlling Motors and Servos.
  * </p>
- * 
+ *
  * @author Alexander Carlisi
  * @see <a href="https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf">PCA9685 Data Sheet</a>
  * @see <a href="https://github.com/DFRobotdl/RaspberryPi-MotorDriveBoard">Emakefun Motor Drive Board Reference</a>
@@ -70,7 +70,7 @@ public class PCA9685 {
 
     /**
      * Sets PWM frequency in Hertz.
-     * 
+     *
      * @param freqHz
      */
     public void setPWMFreq(double freqHz) {
@@ -82,7 +82,7 @@ public class PCA9685 {
 
         _I2C.writeRegister(_MODE1, (byte) sleepMode);
         _I2C.writeRegister(_PRESCALE, prescale);
-        
+
         // Restore mode without sleep bit
         _I2C.writeRegister(_MODE1, (byte) (oldMode & ~_SLEEP));
         delay(5);
@@ -93,33 +93,43 @@ public class PCA9685 {
 
     /**
      * Sets raw 12-bit PWM ON/OFF values (0 to 4095) for a specific channel.
-     * 
+     *
      * @param channel   PWM Channel
      * @param on        When to start High Signal
      * @param off       When to start Low Signal
-     * 
+     *
      * @implNote Example code from Emakefun explicitly commented out setting the registers
      *  all at the same time, so this code implementation may not work.
      * @implNote The PCA9685 has a unique functionality for PWM of 4096, so its an allowed value.
      */
-    public void setPWM(int channel, int on, int off) {
-        // Write 4 registers sequentially: ON_L, ON_H, OFF_L, OFF_H
-        byte[] buffer = new byte[] {
-            (byte) (on & 0xFF),
-            (byte) ((on >> 8) & 0xFF),
-            (byte) (off & 0xFF),
-            (byte) ((off >> 8) & 0xFF)
-        };
+    // public void setPWM(int channel, int on, int off) {
+    //     // Write 4 registers sequentially: ON_L, ON_H, OFF_L, OFF_H
+    //     byte[] buffer = new byte[] {
+    //         (byte) (on & 0xFF),
+    //         (byte) ((on >> 8) & 0xFF),
+    //         (byte) (off & 0xFF),
+    //         (byte) ((off >> 8) & 0xFF)
+    //     };
 
+    //     int regAddr = getRegisterAddr(channel);
+    //     _I2C.writeRegister(regAddr, buffer);
+    // }
+    public void setPWM(int channel, int on, int off) {
         int regAddr = getRegisterAddr(channel);
-        _I2C.writeRegister(regAddr, buffer);
+
+        // Write each of the 4 consecutive registers individually to avoid
+        // any ambiguity or misinterpretation by the Pi4J I2C driver array handler.
+        _I2C.writeRegister(regAddr, (byte) (on & 0xFF));
+        _I2C.writeRegister(regAddr + 1, (byte) ((on >> 8) & 0xFF));
+        _I2C.writeRegister(regAddr + 2, (byte) (off & 0xFF));
+        _I2C.writeRegister(regAddr + 3, (byte) ((off >> 8) & 0xFF));
     }
 
     // /**
     //  * Set PWM as a duty cycle
-    //  * 
+    //  *
     //  * @param channel PWM Channel
-    //  * @param dutyCycle 
+    //  * @param dutyCycle
     //  */
     // public void setDutyCycle(int channel, double dutyCycle) {
     //     dutyCycle = Math.max(0.0, Math.min(1.0, dutyCycle)); // Clamp 0-1
@@ -149,14 +159,14 @@ public class PCA9685 {
 
     /**
      * Get Register Address for given Channel.
-     * 
+     *
      * @param channel PWM channel
      * @return register address
-     * 
+     *
      * @implNote Every Channel has 4 Registers, LED0 starts Reg 6
      */
     private int getRegisterAddr(int channel) throws IllegalArgumentException {
-        if (channel > _CHANNEL_SIZE-1 || channel < 0) 
+        if (channel > _CHANNEL_SIZE-1 || channel < 0)
             throw new IllegalArgumentException("Channel arg must be in [0,15]");
         return _LED0_ON_L + (4 * channel);
     }
