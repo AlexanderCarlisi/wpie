@@ -51,12 +51,14 @@ public class QuadratureEncoder implements IEncoder {
         DigitalInputConfig configA = DigitalInput.newConfigBuilder(pi4j)
                 .address(pinA)
                 .pull(PullResistance.PULL_UP)
+                .debounce(0L)
                 .build();
 
         // Configure GPIO Pin B
         DigitalInputConfig configB = DigitalInput.newConfigBuilder(pi4j)
                 .address(pinB)
                 .pull(PullResistance.PULL_UP)
+                .debounce(0L)
                 .build();
 
         _pinA = pi4j.create(configA);
