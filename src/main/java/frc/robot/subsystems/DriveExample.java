@@ -243,6 +243,6 @@ public class DriveExample extends SubsystemBase {
 
             Commands.print("========================"),
             Commands.print("   Servo Test Complete  "),
-            Commands.print("========================")
+            Commands.print("========================"));
         }
 }
