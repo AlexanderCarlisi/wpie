@@ -22,6 +22,6 @@ public interface IDriverBoard {
     public void setAngle(IServo servo, double angleDegrees);
 
 
-    public void update();
-    public void addEncoderTest(IEncoder encoder);
+    // public void update();
+    // public void addEncoderTest(IEncoder encoder);
 }

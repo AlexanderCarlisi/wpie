@@ -167,15 +167,15 @@ public class EmakefunMotorHat implements IDriverBoard {
         setPWM(servo.getPin(), pulseTicks);
     }
 
-    @Override
-    public void addEncoderTest(IEncoder encoder) {
-        _ENCODER_REFERENCES.add(encoder);
-    }
+    // @Override
+    // public void addEncoderTest(IEncoder encoder) {
+    //     _ENCODER_REFERENCES.add(encoder);
+    // }
 
-    @Override
-    public void update() {
-        for (IEncoder encoder : _ENCODER_REFERENCES) {
-            encoder.update();
-        }
-    }
+    // @Override
+    // public void update() {
+    //     for (IEncoder encoder : _ENCODER_REFERENCES) {
+    //         encoder.update();
+    //     }
+    // }
 }

@@ -116,8 +116,8 @@ public class QuadratureEncoder implements IEncoder {
 
 
 
-    @Override
-    public void update() {
-        // updatePosition();
-    }
+    // @Override
+    // public void update() {
+    //     // updatePosition();
+    // }
 }
