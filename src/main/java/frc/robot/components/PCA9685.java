@@ -73,22 +73,40 @@ public class PCA9685 {
      *
      * @param freqHz
      */
+    // public void setPWMFreq(double freqHz) {
+    //     double prescaleVal = (25000000.0 / ((double) _PWM_RES * freqHz)) - 1.0;
+    //     byte prescale = (byte) Math.round(prescaleVal);
+
+    //     int oldMode = _I2C.readRegister(_MODE1);
+    //     int sleepMode = (oldMode & ~_RESTART) | _SLEEP; // Clear RESTART, set SLEEP
+
+    //     _I2C.writeRegister(_MODE1, (byte) sleepMode);
+    //     _I2C.writeRegister(_PRESCALE, prescale);
+
+    //     // Restore mode without sleep bit
+    //     _I2C.writeRegister(_MODE1, (byte) (oldMode & ~_SLEEP));
+    //     delay(5);
+
+    //     // Wake up with Auto-Increment AND Restart enabled
+    //     _I2C.writeRegister(_MODE1, (byte) (oldMode | _AI | _RESTART));
+    // }
+    //
     public void setPWMFreq(double freqHz) {
-        double prescaleVal = (25000000.0 / ((double) _PWM_RES * freqHz)) - 1.0;
+        double prescaleVal = (25000000.0 / (4096.0 * freqHz)) - 1.0;
         byte prescale = (byte) Math.round(prescaleVal);
 
         int oldMode = _I2C.readRegister(_MODE1);
-        int sleepMode = (oldMode & ~_RESTART) | _SLEEP; // Clear RESTART, set SLEEP
+        int sleepMode = (oldMode & 0x7F) | 0x10; // Set SLEEP bit (bit 4)
 
+        // 1. Put chip to sleep
         _I2C.writeRegister(_MODE1, (byte) sleepMode);
+        // 2. Set the prescale frequency
         _I2C.writeRegister(_PRESCALE, prescale);
 
-        // Restore mode without sleep bit
-        _I2C.writeRegister(_MODE1, (byte) (oldMode & ~_SLEEP));
+        // 3. Wake up and enable Auto-Increment (_AI = 0x20) and Restart (_RESTART = 0x80)
+        int wakeMode = (oldMode & ~0x10) | 0x20 | 0x80;
+        _I2C.writeRegister(_MODE1, (byte) wakeMode);
         delay(5);
-
-        // Wake up with Auto-Increment AND Restart enabled
-        _I2C.writeRegister(_MODE1, (byte) (oldMode | _AI | _RESTART));
     }
 
     /**
