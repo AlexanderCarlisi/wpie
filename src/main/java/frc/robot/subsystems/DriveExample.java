@@ -204,7 +204,6 @@ public class DriveExample extends SubsystemBase {
     public Command servoTest(int servoId) {
         double startDelaySeconds = 1;
         double testDelaySeconds = 3;
-        double angle = 40;
 
         System.out.println("========================");
         System.out.println("       Servos TEST      ");
@@ -245,4 +244,17 @@ public class DriveExample extends SubsystemBase {
             Commands.print("   Servo Test Complete  "),
             Commands.print("========================"));
         }
+
+    public Command servoTestAll() {
+        return Commands.sequence(
+            servoTest(0),
+            servoTest(1),
+            servoTest(2),
+            servoTest(3),
+            servoTest(4),
+            servoTest(5),
+            servoTest(6),
+            servoTest(7)
+        );
+    }
 }
