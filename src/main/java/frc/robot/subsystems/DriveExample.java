@@ -41,6 +41,17 @@ public class DriveExample extends SubsystemBase {
     private final GenericServo _armLigment7 = new GenericServo(6);
     private final GenericServo _armLigment8 = new GenericServo(7);
 
+    private final GenericServo[] _servos = new GenericServo[] {
+        _armLigment1,
+        _armLigment2,
+        _armLigment3,
+        _armLigment4,
+        _armLigment5,
+        _armLigment6,
+        _armLigment7,
+        _armLigment8
+    };
+
     private final NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
     private final NetworkTable table = ntinst.getTable("Testing");
     private final BooleanTopic topic = ntinst.getBooleanTopic("Testing/MotorTest");
@@ -189,4 +200,49 @@ public class DriveExample extends SubsystemBase {
             Commands.print("========================")
         );
     }
+
+    public Command servoTest(int servoId) {
+        double startDelaySeconds = 1;
+        double testDelaySeconds = 3;
+        double angle = 40;
+
+        System.out.println("========================");
+        System.out.println("       Servos TEST      ");
+        System.out.println("========================");
+        System.out.println("Starting...");
+        return Commands.sequence(
+            Commands.waitSeconds(startDelaySeconds),
+
+            Commands.print("To 0"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(0);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("To 90"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(90);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("To 45"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(45);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("To 180"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(180);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("To 340"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(340);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("To 360"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(360);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("To 420"),
+            Commands.runOnce(() -> {_servos[servoId].setAngle(420);}),
+            Commands.waitSeconds(testDelaySeconds),
+
+            Commands.print("========================"),
+            Commands.print("   Servo Test Complete  "),
+            Commands.print("========================")
+        }
 }
