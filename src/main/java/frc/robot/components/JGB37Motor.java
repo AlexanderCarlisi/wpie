@@ -80,7 +80,7 @@ public class JGB37Motor implements IDCMotor {
     @Override
     public void setDutyCycle(double dutyCycle) {
         _currentDutyCycle = Math.max(Math.min(dutyCycle, _DUTY_CYCLE_LIMIT), -_DUTY_CYCLE_LIMIT);
-        setPWM((int) Math.round((dutyCycle * 255)));
+        setPWM((int) Math.round((_currentDutyCycle * 255)));
     }
 
     @Override
